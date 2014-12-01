@@ -1,0 +1,41 @@
+<div class="small-4 columns">
+  <h1>Contacts</h1>
+
+
+  <ul>
+    <% @contacts.each do |contact| %>
+      <li><%= contact.name %> - <%= contact.phone_number %></li>
+    <% end %>
+  </ul>
+
+  <ul class="pagination">
+    <% if @page == 1 %>
+      <li class="arrow unavailable"><a href="">&laquo;</a></li>
+    <% else %>
+      <li class="arrow"><a href="?page=<%= (@page-1) %>">&laquo;</a></li>
+    <% end %>
+
+    <% (1..@total_pages).each do |page_number| %>
+      <% if @page == page_number  %>
+        <li class="current">
+      <% else %>
+        <li>
+      <% end  %>
+        <a href="?page=<%= page_number %>"><%= page_number %></a>
+      </li>
+    <% end %>
+
+
+    <% if @page == @total_pages %>
+      <li class="arrow unavailable"><a href="">&raquo;</a></li>
+    <% else %>
+      <li class="arrow"><a href="?page=<%= (@page+1) %>">&raquo;</a></li>
+    <% end %>
+  </ul>
+
+  <form action='/' method='GET'>
+    <input type='Text' name='query'>
+    <button class="radius" type='submit'>Search Contacts</button>
+  </form>
+  <a href="/contacts/new" class="button radius">Add new contact</a>
+</div>
