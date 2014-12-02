@@ -1,29 +1,15 @@
-require 'pry'
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/reloader'
 
 require_relative 'models/contact'
 
-# before do
-#   contact_attributes = [
-#     { first_name: 'Eric', last_name: 'Kelly', phone_number: '1234567890' },
-#     { first_name: 'Adam', last_name: 'Sheehan', phone_number: '1234567890' },
-#     { first_name: 'Dan', last_name: 'Pickett', phone_number: '1234567890' },
-#     { first_name: 'Evan', last_name: 'Charles', phone_number: '1234567890' },
-#     { first_name: 'Faizaan', last_name: 'Shamsi', phone_number: '1234567890' },
-#     { first_name: 'Helen', last_name: 'Hood', phone_number: '1234567890' },
-#     { first_name: 'Corinne', last_name: 'Babel', phone_number: '1234567890' }
-#   ]
-#
-#   @contacts = contact_attributes.map do |attr|
-#     Contact.new(attr)
-#   end
-# end
+def page_length
+  10
+end
 
 get '/' do
   @query = params[:query]
-  page_length = 5
   @page = params[:page] || 1
   @page = @page.to_i
   offset = (@page - 1) * page_length
@@ -42,7 +28,11 @@ get '/contacts/new' do
 end
 
 post '/contacts/new' do
-  # save contact to db
+  Contact.create({
+    first_name: params[:first_name],
+    last_name: params[:last_name],
+    phone_number: params[:phone_number]
+    })
   redirect '/'
 end
 
